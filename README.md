@@ -23,8 +23,36 @@ Self-host RustDesk rendezvous server (hbbs) on Fly.io for remote support and pri
    - Check logs: `fly logs`
 
 5. **Configure your RustDesk clients**
-   - Set the server address to `<your-app-name>.fly.dev` and port `21115`
+   - Set the server address to your Fly.io IPv6 address (see below) and port `21115`
+   - Use the public key from logs (see below)
    - No relay server (`hbbr`) is included in this setup
+
+## Retrieving the Server Public Key
+- After deployment, run `fly logs --no-tail` and look for a line like:
+  ```
+  INFO [src/rendezvous_server.rs:1205] Key: 8cztJw3g5VkBo65LPxVSdDw0M3UrNMOWrcUA241krx=
+  ```
+- Copy the value after `Key:` and paste it into the **Key** field in your RustDesk client.
+
+## Using a Fly.io IPv6 Address
+- If your app's `.fly.dev` domain does not resolve, allocate a dedicated IPv6 address:
+  ```sh
+  fly ips allocate-v6
+  fly ips list  # Note the v6 address
+  ```
+- In your RustDesk client, enter the IPv6 address in the **ID server** field, e.g.:
+  ```
+  2a09:8280:1::8a:ab92:0
+  ```
+  or
+  ```
+  [2a09:8280:1::8a:ab92:0]:21115
+  ```
+  (Brackets are required for IPv6 with port)
+- If you need to release an IP:
+  ```sh
+  fly ips release <address>
+  ```
 
 ## Ports
 - 21115/tcp (Rendezvous, TLS)
