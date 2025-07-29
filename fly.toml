@@ -1,0 +1,55 @@
+# fly.toml app configuration file generated for rustdesk-server-change-me on 2025-07-28T19:12:10-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'rustdesk-server-change-me'
+primary_region = 'yyz'
+
+[build]
+  dockerfile = './Dockerfile'
+
+[[mounts]]
+  source = 'rustdesk_data'
+  destination = '/root'
+
+[[services]]
+  protocol = 'tcp'
+  internal_port = 21115
+
+  [[services.ports]]
+    port = 21115
+    handlers = ['tls', 'http']
+
+[[services]]
+  protocol = 'udp'
+  internal_port = 21116
+
+  [[services.ports]]
+    port = 21116
+
+[[services]]
+  protocol = 'tcp'
+  internal_port = 21117
+
+  [[services.ports]]
+    port = 21117
+
+[[services]]
+  protocol = 'tcp'
+  internal_port = 21118
+
+  [[services.ports]]
+    port = 21118
+
+[[services]]
+  protocol = 'tcp'
+  internal_port = 21119
+
+  [[services.ports]]
+    port = 21119
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
