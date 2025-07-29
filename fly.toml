@@ -53,3 +53,9 @@ primary_region = 'yyz'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+
+[checks]
+  [tcp]
+    port = 21115
+    interval = "30s"
+    timeout = "5s"
